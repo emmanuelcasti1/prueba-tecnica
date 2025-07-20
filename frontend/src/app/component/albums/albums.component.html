@@ -1,0 +1,78 @@
+<div class="container mt-4">
+  <!-- Botón Volver -->
+  <div class="mb-3">
+    <a routerLink="/" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Volver al Home
+    </a>
+  </div>
+
+  <!-- Selector de Usuario -->
+  <div class="card mb-4 shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="card-title mb-0">Seleccionar Usuario</h5>
+    </div>
+    <div class="card-body">
+      <select class="form-select" [(ngModel)]="selectedUserId" (change)="onUserSelected(selectedUserId!)">
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }} ({{ user.email }})
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Información del Usuario -->
+  <div *ngIf="selectedUser" class="card mb-4 shadow">
+    <div class="card-header bg-info text-white">
+      <h5 class="card-title mb-0">Información del Usuario</h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>Nombre:</strong> {{ selectedUser.name }}</p>
+          <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>ID:</strong> {{ selectedUser.id }}</p>
+          <p *ngIf="selectedUser.username"><strong>Username:</strong> {{ selectedUser.username }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Álbumes del Usuario -->
+  <div class="card shadow">
+    <div class="card-header bg-success text-white">
+      <h5 class="card-title mb-0">Álbumes ({{ albums.length }})</h5>
+    </div>
+    <div class="card-body">
+      <!-- Loading -->
+      <div *ngIf="isLoading" class="text-center py-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Cargando álbumes...</p>
+      </div>
+
+      <!-- Lista de álbumes -->
+      <div *ngIf="!isLoading">
+        <div *ngIf="albums.length === 0" class="alert alert-info">
+          Este usuario no tiene álbumes.
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <div *ngFor="let album of albums" class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ album.title }}</h5>
+                <p class="card-text text-muted">ID: {{ album.id }}</p>
+              </div>
+              <div class="card-footer bg-transparent">
+                <small class="text-muted">Usuario ID: {{ album.userId }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

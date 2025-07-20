@@ -1,0 +1,59 @@
+ <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <!-- Tarjeta de bienvenida -->
+          <div class="card text-center border-primary mb-4 shadow">
+            <div class="card-header bg-primary text-white">
+              <h1 class="card-title display-5 mb-0">Bienvenido al Sistema</h1>
+            </div>
+            <div class="card-body">
+              <p class="card-text lead text-muted">
+                Seleccione qué información desea visualizar
+              </p>
+            </div>
+          </div>
+
+          <!-- Opciones de navegación -->
+          <div class="row g-4">
+            <!-- Usuarios y Posts -->
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                  <i class="bi bi-people-fill display-4 text-primary mb-3"></i>
+                  <h3 class="card-title h4">Usuarios y Posts</h3>
+                  <a routerLink="/users-posts" class="btn btn-primary stretched-link">
+                    Acceder
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lista de Peticiones -->
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                  <i class="bi bi-list-check display-4 text-success mb-3"></i>
+                  <h3 class="card-title h4">Lista de Peticiones</h3>
+                  <a routerLink="/requests" class="btn btn-success stretched-link">
+                    Acceder
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Álbumes -->
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                  <i class="bi bi-images display-4 text-info mb-3"></i>
+                  <h3 class="card-title h4">Álbumes</h3>
+                  <a routerLink="/albums" class="btn btn-info stretched-link">
+                    Acceder
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

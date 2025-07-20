@@ -1,0 +1,73 @@
+<div class="container-fluid mt-3">
+  <!-- Botón Volver -->
+  <div class="row mb-3">
+    <div class="col">
+      <a routerLink="/" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Volver al Home
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Columna de Usuarios -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title mb-0">Lista de Usuarios</h5>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let user of users"
+                class="list-group-item list-group-item-action"
+                [class.active]="selectedUserId === user.id"
+                (click)="selectUser(user.id)">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h5 class="mb-1">{{ user.id }}</h5>
+                  <h6 class="mb-1">{{ user.name }}</h6>
+                  <h6 class="mb-1">{{ user.username }}</h6>
+                  <small class="text-muted">{{ user.email }}</small>
+                </div>
+                <span class="badge bg-primary rounded-pill">
+                  {{ getPostsByUser(user.id).length }}
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna de Posts -->
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          <h5 class="card-title mb-0">
+            Posts del Usuario
+            <span *ngIf="selectedUserId" class="badge bg-light text-dark ms-2">
+              {{ getPostsByUser(selectedUserId).length }} posts
+            </span>
+          </h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="!selectedUserId" class="alert alert-info">
+            Selecciona un usuario para ver sus posts
+          </div>
+
+          <div *ngIf="selectedUserId">
+            <div *ngFor="let post of getPostsByUser(selectedUserId)" class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.body }}</p>
+              </div>
+            </div>
+
+            <div *ngIf="getPostsByUser(selectedUserId).length === 0" class="alert alert-warning">
+              Este usuario no tiene posts
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

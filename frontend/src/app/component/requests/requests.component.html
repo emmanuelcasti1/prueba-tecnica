@@ -1,0 +1,196 @@
+<div class="container mt-4">
+  <!-- Botón Volver y Crear -->
+  <div class="d-flex justify-content-between mb-3">
+    <a routerLink="/" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Volver al Home
+    </a>
+    <button class="btn btn-success" (click)="openCreateModal()">
+      <i class="bi bi-plus-circle"></i> Crear Petición
+    </button>
+  </div>
+
+  <!-- Tabla de Requests -->
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="card-title mb-0">Lista de Peticiones</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Método</th>
+              <th>Fecha</th>
+              <th>Datos</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of requests">
+              <td>{{ request.id }}</td>
+              <td>{{ request.method }}</td>
+              <td>{{ request.date | date : "medium" }}</td>
+              <td class="text-truncate" style="max-width: 200px">
+                {{ request.returnedData }}
+              </td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-2"
+                  (click)="openEditModal(request)"
+                >
+                  <i class="bi bi-pencil"></i> Editar
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openDeleteModal(request)"
+                >
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Crear Petición -->
+<div class="modal" [class.show]="showCreateModal">
+  <div class="modal-content">
+    <div class="modal-header bg-success text-white">
+      <h5 class="modal-title">Crear Nueva Petición</h5>
+      <button type="button" class="close-btn" (click)="closeModal()">
+        &times;
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="createRequest()">
+        <div class="form-group">
+          <label for="createMethod">Método</label>
+          <select
+            class="form-control"
+            id="createMethod"
+            [(ngModel)]="newRequest.method"
+            name="method"
+            required
+          >
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="createData">Datos</label>
+          <textarea
+            class="form-control"
+            id="createData"
+            rows="5"
+            [(ngModel)]="newRequest.returnedData"
+            name="returnedData"
+            required
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-success">Crear Petición</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Edición -->
+<div class="modal" [class.show]="showEditModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Editar Petición</h5>
+      <button type="button" class="close-btn" (click)="closeModal()">
+        &times;
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="saveChanges()">
+        <div class="form-group">
+          <label for="editMethod">Método</label>
+          <select
+            class="form-control"
+            id="editMethod"
+            [(ngModel)]="editedRequest.method"
+            name="method"
+            required
+          >
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="editData">Datos</label>
+          <textarea
+            class="form-control"
+            id="editData"
+            rows="5"
+            [(ngModel)]="editedRequest.returnedData"
+            name="returnedData"
+            required
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmación de Eliminación -->
+<div class="modal" [class.show]="showDeleteModal">
+  <div class="modal-content">
+    <div class="modal-header bg-danger text-white">
+      <h5 class="modal-title">Confirmar Eliminación</h5>
+      <button type="button" class="close-btn" (click)="closeModal()">
+        &times;
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>¿Estás seguro que deseas eliminar esta petición?</p>
+      <div class="alert alert-warning">
+        <strong>ID:</strong> {{ requestToDelete?.id }}<br />
+        <strong>Método:</strong> {{ requestToDelete?.method }}<br />
+        <strong>Fecha:</strong> {{ requestToDelete?.date | date : "medium" }}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">
+        Cancelar
+      </button>
+      <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Fondo oscuro del modal -->
+<div
+  class="modal-backdrop"
+  [class.show]="showCreateModal || showEditModal || showDeleteModal"
+  (click)="closeModal()"
+></div>
