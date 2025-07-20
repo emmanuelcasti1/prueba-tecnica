@@ -20,7 +20,7 @@ Aplicación para registro y gestión de peticiones HTTP con:
 - Node.js 18+
 
 ## Clonar el repositorio
-- git remote add origin https://github.com/emmanuelcasti1/prueba-tecnica-fullStack.git
+- git remote add origin https://github.com/emmanuelcasti1/prueba-tecnica.git
 ### 🐘 PostgreSQL Setup
 Crear base de datos:
 ```bash
